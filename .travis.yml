@@ -4,9 +4,9 @@ services:
   - docker
 
 script:
-  - docker build -t rakshans1/wordpress .
+  - docker build -t wp .
   - docker run -d -e MYSQL_ROOT_PASSWORD=12345678 --name mysql mysql
-  - docker run -d -e WORDPRESS_PLUGINS="jetpack;wordfence" -e WORDPRESS_ACTIVE_THEME=responsive -e WORDPRESS_THEMES="responsive" --name rakshans1/wordpress --link mysql:mysql rakshans1/wordpress
+  - docker run -d -e WORDPRESS_PLUGINS="jetpack;wordfence" -e WORDPRESS_ACTIVE_THEME=responsive -e WORDPRESS_THEMES="responsive" --name wp --link mysql:mysql wp
   - sleep 15
-  - docker logs rakshans1/wordpress
-  - docker exec rakshans1/wordpress /bin/sh -c "apt-get update && apt-get install curl -y --no-install-recommends && curl -vf localhost:80"
+  - docker logs wp
+  - docker exec wp /bin/sh -c "apt-get update && apt-get install curl -y --no-install-recommends && curl -vf localhost:80"
